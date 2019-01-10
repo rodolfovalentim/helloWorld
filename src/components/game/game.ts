@@ -1,39 +1,53 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { WebsocketProvider } from '../../providers/websocket/websocket';
+import { MessagerProvider } from '../../providers/messager/messager';
 
 declare var createjs: any;
 
 @Component({
   selector: 'game',
-  templateUrl: 'game.html'
+  templateUrl: 'game.html',
+  providers: [WebsocketProvider, MessagerProvider]
 })
 export class GameComponent {
 
   @Input() name;
 
-  stage: any;
-  loader: any;
-  w: any;
-  h: any;
-  manifest: any;
+  private stage: any;
+  private w: any;
+  private h: any;
+  private manifest: any;
+  public speed: number = -1;
 
-  sky: any;
-  ground: any
-  hill: any;
-  hill2: any;
-  alpha: any;
-  spriteSheet: any;
-  grant: any;
-  groundImg: any;
+  private sky: any;
+  private ground: any
+  private hill: any;
+  private hill2: any;
+  private grant: any;
 
-  grantSpeed: number = 150;
-  hillSpeed: number = 30;
-  hill2Speed: number = 50;
+  private grantSpeed: number = 150;
+  private hillSpeed: number = 30;
+  private hill2Speed: number = 50;
 
-  images: Map<string, any>;
+  private images: Map<string, any>;
 
-  constructor() { }
+  private message = {
+		author: 'tutorialedge',
+		message: 'this is a test message'
+	}
 
+  constructor(private messager: MessagerProvider) {
+    messager.create('http://localhost:5000/')
+    messager.messages.subscribe(msg => {
+      console.log("Response from websocket: ", this.name, msg);
+      this.speed = Number(msg.message)
+    });
+  }
+
+  sendMsg() {
+		console.log('Send message from client to websocket: ', this.message);
+		this.messager.sendMsg(this.message);
+	}
 
   ngAfterViewInit() {
     // drawing the game canvas from scratch here
