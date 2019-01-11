@@ -7,7 +7,7 @@
       <ion-badge *ngIf="speed == -1; else elseBlock" color="danger">Not connected</ion-badge>
       <ng-template #elseBlock><ion-badge>Connected</ion-badge></ng-template>
       
-      <ion-badge>{{grantSpeed}}</ion-badge>
+      <ion-badge>{{speed}}</ion-badge>
       <ion-item>
         <ion-range min="0" max="500" color="secondary" [(ngModel)]="grantSpeed"></ion-range>
       </ion-item>

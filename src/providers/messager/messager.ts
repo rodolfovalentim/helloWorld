@@ -20,16 +20,16 @@ export class MessagerProvider {
 		this.messages = <Subject<Message>>this.wsService
 			.connect(CHAT_URL)
 			.map((response: any): any => {
-        let data = JSON.parse(response);
+        		let data = JSON.parse(response);
 				return {
 					author: data.author,
 					message: data.message
 				}
 			});
-  }
+    }
   
   sendMsg(msg) {
-		this.messages.next(msg);
+    this.messages.next(msg);
 	}
 }
 
