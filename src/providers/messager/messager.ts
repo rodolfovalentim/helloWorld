@@ -24,9 +24,9 @@ export class MessagerProvider {
 				return {
 					author: data.author,
 					message: data.message
-				}
-			});
-    }
+			}
+		});
+  }
   
   sendMsg(msg) {
     this.messages.next(msg);

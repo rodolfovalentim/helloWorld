@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { GameComponent } from '../components/game/game'
 import { WebsocketProvider } from '../providers/websocket/websocket';
 import { MessagerProvider } from '../providers/messager/messager';
+import { ScoreProvider } from '../providers/score/score';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MessagerProvider } from '../providers/messager/messager';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     WebsocketProvider,
-    MessagerProvider
+    MessagerProvider,
+    ScoreProvider
   ]
 })
 export class AppModule {}

@@ -5,13 +5,13 @@ import * as Rx from 'rxjs/Rx';
 
 @Injectable()
 export class WebsocketProvider {
-  
+
   private socket;
 
   constructor() { }
 
   connect(url): Rx.Subject<MessageEvent> {
-    
+
     // If you aren't familiar with environment variables then
     // you can hard code `environment.ws_url` as `http://localhost:5000`
     this.socket = io.connect(url)
@@ -19,39 +19,35 @@ export class WebsocketProvider {
     // We define our observable which will observe any incoming messages
     // from our socket.io server.
     let observable = new Observable(observer => {
-        this.socket.on('connect', () => {
-          console.log("Connected");
-        })
+      this.socket.on('connect', () => {
+        console.log("Connected");
+      })
 
-        this.socket.on('disconnect', () => {
-          console.log("Disconnect");
-          observer.next(JSON.stringify({"author": "connect", "message": "-1"}));
-        })
+      this.socket.on('disconnect', () => {
+        console.log("Disconnect");
+        observer.next(JSON.stringify({ "author": "connect", "message": "-1" }));
+      })
 
-        this.socket.on('message', (data) => {
-          console.log("Incoming message:", data)
-          observer.next(data);
-        })      
-        return () => {
-          this.socket.disconnect();
-        }
+      this.socket.on('message', (data) => {
+        console.log("Incoming message:", data)
+        observer.next(data);
+      })
+      return () => {
+        this.socket.disconnect();
+      }
     });
-    
+
     // We define our Observer which will listen to messages
     // from our other components and send messages back to our
     // socket server whenever the `next()` method is called.
     let observer = {
-        next: (data: Object) => {
-            this.socket.emit('message', JSON.stringify(data));
-        },
+      next: (data: Object) => {
+        this.socket.emit('message', JSON.stringify(data));
+      },
     };
 
     // we return our Rx.Subject which is a combination
     // of both an observer and observable.
     return Rx.Subject.create(observer, observable);
-  }
-
-  desconnect() { 
-    this.socket.disconnect();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { WebsocketProvider } from '../../providers/websocket/websocket';
 import { MessagerProvider } from '../../providers/messager/messager';
+import { ScoreProvider } from '../../providers/score/score';
 
 declare var createjs: any;
 
@@ -12,6 +13,7 @@ declare var createjs: any;
 export class GameComponent {
 
   @Input() name;
+  @Input() scoreBoard?;
 
   private stage: any;
   private w: any;
@@ -86,6 +88,7 @@ export class GameComponent {
     if (position >= this.w) {
       this.grant.x = - grantW
       console.log(this.start)
+      this.scoreBoard.next({ "player": this.name, "value": 1 })
       this.start = 0
     }
     else {

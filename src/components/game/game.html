@@ -3,14 +3,15 @@
     <canvas [attr.id]="name" [width]="w" height="400"></canvas>
   </ion-col>
   <ion-col col-2>
-      <ion-badge *ngIf="speed == -1; else elseBlock" color="danger">Not connected</ion-badge>
-      <ng-template #elseBlock><ion-badge>Connected</ion-badge></ng-template>
+    <ion-badge *ngIf="speed == -1; else elseBlock" color="danger">Not connected</ion-badge>
+    <ng-template #elseBlock>
+      <ion-badge>Connected</ion-badge>
+    </ng-template>
 
-      <ion-badge>{{speed}}</ion-badge>
-      <ion-item>
-        <ion-range min="0" max="500" color="secondary" [(ngModel)]="grantSpeed"></ion-range>
-      </ion-item>
-        <button ion-button (click)="sendMsg()">Send Message</button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+    <ion-badge>{{speed}}</ion-badge>
+    <ion-item>
+      <ion-range min="0" max="500" color="secondary" [(ngModel)]="grantSpeed"></ion-range>
+    </ion-item>
+    <button ion-button (click)="sendMsg()">Send Message</button>
+  </ion-col>
+</ion-row>
